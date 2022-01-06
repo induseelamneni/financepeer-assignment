@@ -38,7 +38,7 @@ class LoginForm extends Component {
     event.preventDefault()
     const {username, password} = this.state
     const userDetails = {username, password}
-    const url = 'https://nodejs-authentication-insert.herokuapp.com/login'
+    const url = 'https://indu-financepeer-assignment.herokuapp.com/login'
     console.log(url)
     const options = {
       method: 'POST',

@@ -26,16 +26,17 @@ class FetchedResults extends Component {
   getUserDetails = async () => {
     this.setState({dataStatus: fetchedDataStatus.inProgress})
     const response = await fetch(
-      'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json',
+      'https://indu-financepeer-assignment.herokuapp.com/',
     )
     if (response.ok) {
       const data = await response.json()
+      console.log(data)
 
       const formattedData = data.map(each => ({
+        userId: each.user_id,
         id: each.id,
         name: each.name,
-        email: each.email,
-        role: each.role,
+        body: each.body,
       }))
 
       this.setState({
@@ -53,7 +54,23 @@ class FetchedResults extends Component {
     const {userData} = this.state
     console.log(userData)
 
-    return <div>p</div>
+    return (
+      <ul className="ul-list">
+        <li className="list-item">
+          <p>name</p>
+          <p>userId</p>
+          <p>body</p>
+        </li>
+        {userData.map(each => (
+          <li key={each.id} className="list-item">
+            <p>UserId: {each.userId}</p>
+            <p>Name: {each.name}</p>
+
+            <p>Body: {each.body}</p>
+          </li>
+        ))}
+      </ul>
+    )
   }
 
   // Loader View
@@ -105,7 +122,8 @@ class FetchedResults extends Component {
         <Navbar />
         <div className="cart-container">
           <div className="cart-content-container">
-            <h1 className="cart-heading">My Cart</h1>
+            <h1 className="cart-heading">Displaying the list of posts</h1>
+
             {this.renderData()}
           </div>
         </div>
