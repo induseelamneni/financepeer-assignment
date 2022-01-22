@@ -1,4 +1,7 @@
 import Loader from 'react-loader-spinner'
+
+import Cookies from 'js-cookie'
+
 import {Component} from 'react'
 import Navbar from '../Navbar'
 
@@ -25,9 +28,20 @@ class FetchedResults extends Component {
 
   getUserDetails = async () => {
     this.setState({dataStatus: fetchedDataStatus.inProgress})
-    const response = await fetch(
-      'https://indu-financepeer-assignment.herokuapp.com/',
-    )
+
+    const apiUrl = 'https://indu-financepeer-assignment.herokuapp.com/usersdata'
+
+    const jwtToken = Cookies.get('jwt_token')
+
+    const options = {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
+      method: 'GET',
+    }
+
+    const response = await fetch(apiUrl, options)
+
     if (response.ok) {
       const data = await response.json()
       console.log(data)
